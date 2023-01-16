@@ -1,0 +1,8 @@
+res/resD/10foldCV_fixed.Rdata
+res/resE/10foldCV_fixed.Rdata
+res/resD/10foldCV_host.Rdata
+res/resE/10foldCV_host.Rdata
+res/resD/10foldCV_strain.Rdata
+res/resE/10foldCV_strain.Rdata
+res/resD/10foldCV_host_strain.Rdata
+res/resE/10foldCV_host_strain.Rdata

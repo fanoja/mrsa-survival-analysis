@@ -1,0 +1,8 @@
+fixed
+host_id
+strain
+ST
+host_id,strain
+host_id,ST
+strain,ST
+strain,ST,host_id
