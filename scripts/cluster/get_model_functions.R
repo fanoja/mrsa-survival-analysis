@@ -18,9 +18,9 @@ strain_based <- TRUE
 
 if(strain_based){
     # Read the data required for the model in question
-    data <- readRDS("data/strain_surv_data/data.RData")
-    data_sites <- readRDS("data/strain_surv_data/data_sites.RData")
-    treatments <- readRDS("data/strain_surv_data/treatments.RData")
+    data <- readRDS("data/surv_data/data.RData")
+    data_sites <- readRDS("data/surv_data/data_sites.RData")
+    treatments <- readRDS("data/surv_data/treatments.RData")
 }
 
 check_no_resistant_obs <- function(data, covariates){
