@@ -11,3 +11,5 @@ scipts/cluster/saved_models/interval_censored/model2/site_models/**
 kfold/strain_surv_data/**
 MRSA Clearance full.ipynb
 extra.R
+extra.ipynb
+data/csv/**
