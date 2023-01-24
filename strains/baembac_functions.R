@@ -1,6 +1,6 @@
 ## Functions for running BaeMBac on the data
 
-# Note that you will need the BaeMBac code (https://github.com/mjarvenpaa/bacterial-colonization-model) for this.
+# Note that you will need the BaeMBac code (https://github.com/mjarvenpaa/bacterial-colonization-model) in this directory for running this.
 
 if (!require("latex2exp")) install.packages("latex2exp", repos = "https://cloud.r-project.org/")
 if (!require("coda")) install.packages("coda", repos = "https://cloud.r-project.org/")
