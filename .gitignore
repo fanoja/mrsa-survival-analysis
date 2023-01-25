@@ -1,5 +1,4 @@
 .ipynb_checkpoints
-data/
 renv/library
 renv/sandbox
 renv/settings.dcf
@@ -8,7 +7,6 @@ saved_models/site_models/**
 scirpts/cluster/data/**
 scripts/cluster/saved_models/interval_censored/model2/mod*
 scipts/cluster/saved_models/interval_censored/model2/site_models/**
-kfold/strain_surv_data/**
 MRSA Clearance full.ipynb
 extra.R
 extra.ipynb
