@@ -29,7 +29,7 @@ For package management, [renv](https://rstudio.github.io/renv/index.html) is use
 - `saved_models/`: Save fitted models here for visualization.
 - `kfold/`: Results for K-fold Cross-Validation
 - `scripts/`: R scripts necessary for the analysis.
-- `scripts/cluster/`: Scripts to fit the bayesian model on a computing cluster.
+- `scripts/cluster/`: Scripts to fit the Bayesian model on a computing cluster.
 - `strains/`: Files associated with assigning strains to the isolates (see [BaeMBac](https://github.com/mjarvenpaa/bacterial-colonization-model))
 
 
