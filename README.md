@@ -1,6 +1,6 @@
 # MRSA Bayesian Survival Analysis
 
-Analysis code for the manuscript *Impact of Antibiotic Resistance on MRSA Cleareance Using Bayesian Survival Analysis.*
+Analysis code for the manuscript *Bayesian modeling of the impact of antibiotic resistance on the efficiency of MRSA decolonization*
 
 
 ## Requirements
