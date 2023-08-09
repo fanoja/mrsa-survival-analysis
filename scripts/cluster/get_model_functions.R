@@ -14,6 +14,8 @@ load_library <- function(package_name, repos = "https://cloud.r-project.org/"){
 
 load_library("rstanarm")
 
+set.seed(150545)
+
 strain_based <- TRUE
 
 if(strain_based){

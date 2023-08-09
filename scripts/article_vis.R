@@ -173,7 +173,13 @@ custom_mcmc_intervals <- function(mod, pars, prob_outer = 0.95, prob_inner = 0.5
 
     df <- cbind(ci95, ci50)
     colnames(df) <- c("cil", "ciu", "ciml", "cimu") # lower, upper, middle lower, middle upper credible intervals
-    df <- cbind(df[pars,], medians)
+    
+    if (length(pars) == 1){
+        df <- cbind(t(df[pars,]), medians)
+    }else{
+        df <- cbind(df[pars,], medians)
+    }
+    
     df <- cbind(df, data.frame("loc" = seq(dim(df)[1], 1, -1)))
 
     df <- df[order(nrow(df):1),]
@@ -185,7 +191,7 @@ custom_mcmc_intervals <- function(mod, pars, prob_outer = 0.95, prob_inner = 0.5
     geom_errorbar(aes(xmin = cil, xmax = ciu),
                   color = color_scheme_get()$mid,
                  width = 0, size = 0.5) +
-    geom_errorbar(aes(xmin = ciml, xmax = cimu),
+    geom_errorbar(aes(xmin = ciml, xmax = cimu), #aes(xmin = ciml, xmax = cimu)
               color = color_scheme_get()$dark,
              size = 2, width = 0) +
     geom_point(shape = 21, size = 4,
@@ -259,27 +265,24 @@ arm_figs <- function(modd, mode, plotfun, params, no_xlim = FALSE, is_model1 = F
     #' For the rest of the function parameters, see site_figs.
     
     if (is_model1){
-        modd <- extract_params(modd, params = params)
-        mode <- extract_params(mode, params = params)
-        #fitd <- as.matrix(modd)
-        #fite <- as.matrix(mode)
+        modd_ext <- extract_params(modd, params = params)
+        mode_ext <- extract_params(mode, params = params)
+        xlims <- get_mods_quantile_xlims(list("modd" = modd_ext, "mode" = mode_ext), params = params)
+    }else{
+         xlims <- get_mods_quantile_xlims(list("modd" = modd, "mode" = mode), params = params)
     }
-    
-    xlims <- get_mods_quantile_xlims(list("modd" = modd, "mode" = mode), params = params)
-    
-    
     
     if (!no_xlim){
         color_scheme_set("blue")
-        pd <- plotfun(modd, params = params, col_scheme = "blue", ...) + ggtitle("Decolonization") + coord_cartesian(xlim = c(xlims$minx, xlims$maxx))
+        pd <- plotfun(modd, params = params, col_scheme = "blue", is_model1 = is_model1, ...) + ggtitle("Decolonization") + coord_cartesian(xlim = c(xlims$minx, xlims$maxx))
         color_scheme_set("pink") 
-        pe <- plotfun(mode,params = params,col_scheme = "pink", ...) + ggtitle("Education") + coord_cartesian(xlim = c(xlims$minx, xlims$maxx))
+        pe <- plotfun(mode,params = params,col_scheme = "pink", is_model1 = is_model1,...) + ggtitle("Education") + coord_cartesian(xlim = c(xlims$minx, xlims$maxx))
         }
     else{
         color_scheme_set("blue")
-        pd <- plotfun(modd, params = params, col_scheme = "blue", ...) + ggtitle("Decolonization")
+        pd <- plotfun(modd, params = params, col_scheme = "blue", is_model1 = is_model1,...) + ggtitle("Decolonization")
         color_scheme_set("pink")
-        pe <- plotfun(mode,params = params, col_scheme = "pink", ...) + ggtitle("Education")
+        pe <- plotfun(mode,params = params, col_scheme = "pink", is_model1 = is_model1,...) + ggtitle("Education")
         }
     
     if (as_list){
@@ -329,13 +332,14 @@ get_mcmc_intervals <- function(mod, params, title = "Posterior Intervals", is_mo
     #' @return pd Ggplot2 object.
     
     if (is_model1){
+        
         mod <- extract_params(mod, params = params)
         pars <- params
     }
     else{
         pars <- names(mod$coefficients)[names(mod$coefficients) %in% params]
     }
-
+    
     color_scheme_set(col_scheme)
 
     pd <- custom_mcmc_intervals(mod, pars = pars, prob_outer = 0.95) +
@@ -343,7 +347,6 @@ get_mcmc_intervals <- function(mod, params, title = "Posterior Intervals", is_mo
     #geom_vline(xintercept = 0, color = "darkgray", size = 0.75) +
     labs(title = title)
     
-
     return(pd)
 }
 

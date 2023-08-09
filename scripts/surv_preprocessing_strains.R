@@ -3,12 +3,14 @@
 
 data_root <- "data/"
 THRESHOLD <- 45 # from BaeMBac output figure z_vs_t_and_d_pred.pdf, 10 %, E arm
+root <- ""
+get_data <- FALSE
 
 ## Required scripts ##
+source(paste(root, "scripts/utilities.R", sep = ""))
+source(paste(root, "scripts/mdata_preprocessing.R", sep = ""))
+source(paste(root, "scripts/strain_functions.R", sep = ""))
 
-source("scripts/utilities.R")
-source("scripts/mdata_preprocessing.R")
-source("scripts/strain_functions.R")
 
 ## Functions ##
 
@@ -285,6 +287,7 @@ get_surv_data_strain <- function(mdata,
         if (length(v0 != 0)){ 
             if (by_site){
                 v1_swab <- get_charvec_combo(c("R0", "V1", "V2", "V3", "V4"), fupper(site))
+
                 y <- C[na.omit(as.character(unique(straindata$ID))),v1_swab] # 1 = cleared, 0 = not cleared, 6 = no swab
             }
             else{
@@ -307,7 +310,6 @@ get_surv_data_strain <- function(mdata,
 
             for (v in clear$Visit..){
                 
-
                 if (0 %in% y[names(y) == v]){# Just one 0 per visit is enough to indicate a not cleared case (remember that 0 = not cleared)
                     clear[which(clear$Visit.. == v),"y"] <- 0 
                 }
@@ -340,6 +342,7 @@ get_surv_data_strain <- function(mdata,
                 #vres <- apply(na.omit(vres[,treatments]), 2, any)
                 vres <- apply(vres[,treatments], 2, any) # new 3.11.2022; no omitting NAs
                 newres <- rbind(newres, vres)
+                
             }
             
             newres <- newres[-1,]
@@ -441,26 +444,30 @@ modify_data <- function(data){
 
 ## MAIN ## 
 
-visit_data <- load_visit_data(visit_data_file)
-mykrobe_data <- preprocess_mykrobe_data()
 
-C <- get_clearance_data(visit_data)
-C <- modify_clearmat_wound_6_to_1(C)
+if (get_data){
 
-dfst5 <- readRDS(paste(data_root, "dfst5.RData", sep = ""))
-dfst8 <- readRDS(paste(data_root, "dfst8.RData", sep = ""))
+    visit_data <- load_visit_data(visit_data_file)
+    mykrobe_data <- preprocess_mykrobe_data()
 
-dfst <- add_threshold_strains(rbind(dfst5, dfst8), threshold = THRESHOLD)
+    C <- get_clearance_data(visit_data)
+    C <- modify_clearmat_wound_6_to_1(C)
 
-# Add strain identifiers to mykrobe_data
-mdata <- add_substrains_to_mykrobe_data(mykrobe_data, dfst)
-mdata <- add_missing_resistance(mdata)  # add missing resistances if applicable
+    dfst5 <- readRDS(paste(data_root, "dfst5.RData", sep = ""))
+    dfst8 <- readRDS(paste(data_root, "dfst8.RData", sep = ""))
 
-# Pooled over sites survival data
-print("Constructing survival data...")
-data <- modify_data(get_surv_data_strain(mdata))
-data <- remove_non_adh_intervals(data) # Pooled sites
+    dfst <- add_threshold_strains(rbind(dfst5, dfst8), threshold = THRESHOLD)
 
+    # Add strain identifiers to mykrobe_data
+    mdata <- add_substrains_to_mykrobe_data(mykrobe_data, dfst)
+    mdata <- add_missing_resistance(mdata)  # add missing resistances if applicable
+
+    # Pooled over sites survival data
+    print("Constructing survival data...")
+    data <- modify_data(get_surv_data_strain(mdata))
+    data <- remove_non_adh_intervals(data) # Pooled sites
+
+}
 
 get_site_data <- function(mdata){
     #' Utility function to get site-specific data.
@@ -478,11 +485,14 @@ get_site_data <- function(mdata){
     return(data_sites)
 }
 
-print("Constructing site-specific data...")
-data_sites <- get_site_data(mdata)
-data_sites <- remove_non_adh_intervals(modify_data(data_sites))
+if (get_data){
+    print("Constructing site-specific data...")
+    data_sites <- get_site_data(mdata)
+    data_sites <- remove_non_adh_intervals(modify_data(data_sites))
 
-treatments <- c('Ciprofloxacin','Clindamycin','Erythromycin','Gentamicin','Mupirocin','Rifampicin','Tetracycline','Trimethoprim','Chlorhexidine')
-treatments_td <- treatments[treatments != "Gentamicin"]
+    treatments <- c('Ciprofloxacin','Clindamycin','Erythromycin','Gentamicin','Mupirocin','Rifampicin','Tetracycline','Trimethoprim','Chlorhexidine')
+    treatments_td <- treatments[treatments != "Gentamicin"]
+}
+
 
 

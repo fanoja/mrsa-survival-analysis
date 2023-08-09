@@ -7,7 +7,12 @@ saved_models/site_models/**
 scirpts/cluster/data/**
 scripts/cluster/saved_models/interval_censored/model2/mod*
 scipts/cluster/saved_models/interval_censored/model2/site_models/**
-MRSA Clearance full.ipynb
+MRSA Clearance v0.ipynb
 extra.R
 extra.ipynb
 data/csv/**
+revision v0.ipynb
+missing_resistances.txt
+data/ast_data.RData
+data/surv_data/data_ast.RData
+saved_models/baselines/**

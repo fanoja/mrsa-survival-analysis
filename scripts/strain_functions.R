@@ -57,7 +57,7 @@ find_unique_isolates_within_ST <- function(mdata){
 add_substrains_to_mykrobe_data <- function(mykrobe_data, df){
     #' Add strain identifiers to Mykrobe data
     #'
-    #' Limits Mykrobe data to ST5 and ST8, since these sequence types are clearly 
+    #' Limits Mykrobe data to ST5 and ST8, since these sequence types are clearly most prominent
     #'
     #' @param mykrobe data Mykrobe data frame.
     #' @param df Consecutive distances data frame with strain identifiers included.

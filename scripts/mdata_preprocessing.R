@@ -2,9 +2,11 @@
 
 # Required scripts: utilities.R
 source("scripts/utilities.R")
+#source("scripts/utilities.R")
+
 
 # Location of raw data files
-data_root <- "data/"
+data_root <- "/u/50/ojalaf2/unix/Dropbox (Aalto)/Mrsa_clear/jupyter_notebooks/Publish_saved_models_and_data/"
 
 # Raw data file names
 mykrobe_data_file <- "PCLEAR_Mykrobe_R_predictions.tsv"
@@ -14,7 +16,7 @@ adherence_data_file <- "Adherence.csv"
 
 output <- T # If T, will print the number of isolates/hosts after certain preprocessing steps
 include_adherence <- F # If T, adds adherence data to mykrobe_data
-call_preprocess_mykrobe_data <- F # If T, this script calls preprocess_mykrobe_data function to perform all preprocessing steps
+call_preprocess_mykrobe_data <- T # If T, this script calls preprocess_mykrobe_data function to perform all preprocessing steps
 
 
 
@@ -52,8 +54,7 @@ get_clearance_data <- function(vdata){
         swab_colnames <- c(swab_colnames, paste(visit, paste("Swab", site, sep = "."), sep = "."))
         MRSA_colnames <- c(MRSA_colnames, paste(visit, paste("MRSA.", site, sep = "."), sep = "."))
     }
-
-
+    
     swabs <- vdata[,swab_colnames]
     mrsa <- vdata[,MRSA_colnames]
 
