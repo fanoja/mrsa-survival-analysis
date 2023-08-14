@@ -34,13 +34,15 @@ For package management, [renv](https://rstudio.github.io/renv/index.html) is use
 
 
 ### Data
-- Data in survival analysis compatible format should be included in the directory `data/strain_surv_data`. The following files are required:
+- Data in survival analysis compatible format should be included in the directory `data/surv_data`. The following files are required:
     - `data.RData`: data "pooled" over sites
+    - `data_ast.RData`: same as above, but with phenotypic resistance for mupirocin.
     - `data_sites.RData`: site-specific survival data
     - `treatments.RData`: contains the names of the antimicrobials of interest
 
 ### Jupyter notebooks
 - `MRSA Clearance.ipynb`: Generation of all figures in the manuscript, instructions to running the analysis with examples.
+- `revision.ipynb`: Notebook containing additional results for revision.
 
 ### Source code
 - surv_preprocessing_strains.R: Preprocess the data to a survival analysis format
