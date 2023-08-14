@@ -13,6 +13,4 @@ extra.ipynb
 data/csv/**
 revision v0.ipynb
 missing_resistances.txt
-data/ast_data.RData
-data/surv_data/data_ast.RData
 saved_models/baselines/**
